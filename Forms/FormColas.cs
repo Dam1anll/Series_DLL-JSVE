@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProyectoSeries_DLL_JSVE.Metodos;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,9 +13,21 @@ namespace ProyectoSeries_DLL_JSVE.Forms
 {
     public partial class FormColas : Form
     {
+        private ColasMetodos colasMetodos;
         public FormColas()
         {
             InitializeComponent();
+            colasMetodos = new ColasMetodos(GridColas, txtNombre, txtDescripcion, txtNroCapitulos);
+        }
+
+        private void btnAgregar_Click(object sender, EventArgs e)
+        {
+            colasMetodos.AgregarNuevaSerie();
+        }
+
+        private void btnEliminar_Click(object sender, EventArgs e)
+        {
+            colasMetodos.EliminarSerie();
         }
     }
 }

@@ -17,6 +17,7 @@ namespace ProyectoSeries_DLL_JSVE.Metodos
         private TextBox txtNombre;
         private TextBox txtDescripcion;
         private TextBox txtNroCapitulos;
+        private List<Serie> series;
 
         public ListasMetodos(DataGridView gridListas, TextBox txtNombre, TextBox txtDescripcion, TextBox txtNroCapitulos)
         {
@@ -24,6 +25,7 @@ namespace ProyectoSeries_DLL_JSVE.Metodos
             this.txtNombre = txtNombre;
             this.txtDescripcion = txtDescripcion;
             this.txtNroCapitulos = txtNroCapitulos;
+            this.series = new List<Serie>();
         }
 
         //Agregar Lista

@@ -20,7 +20,6 @@ namespace ProyectoSeries_DLL_JSVE.Metodos
         {
             this.txtTamaño = txtTamaño;
             this.GridArreglos = gridArreglos;
-            this.series = new List<Serie>();
         }
 
         // Agregar Arreglos
@@ -60,7 +59,7 @@ namespace ProyectoSeries_DLL_JSVE.Metodos
                 {
                     int idEliminar = Convert.ToInt32(Interaction.InputBox("Ingrese el id del arreglo a eliminar"));
 
-                    Serie serieEliminar = series.Find(s => s.id == idEliminar);
+                    Serie serieEliminar = series.Find(serie => serie.id == idEliminar);
 
                     if (serieEliminar != null)
                     {
@@ -104,11 +103,11 @@ namespace ProyectoSeries_DLL_JSVE.Metodos
 
                 Serie serieEditar = null;
 
-                foreach (Serie s in series)
+                foreach (Serie serie in series)
                 {
-                    if (s.id == idSerieEditar)
+                    if (serie.id == idSerieEditar)
                     {
-                        serieEditar = s;
+                        serieEditar = serie;
                         break;
                     }
                 }
@@ -152,20 +151,20 @@ namespace ProyectoSeries_DLL_JSVE.Metodos
             {
                 if (series.Count > 0)
                 {
-                    for (int i = 0; i < series.Count; i++)
+                    for (int x = 0; x < series.Count; x++)
                     {
-                        int minimo = i;
+                        int minimo = x;
 
-                        for (int j = i + 1; j < series.Count; j++)
+                        for (int y = x + 1; y < series.Count; y++)
                         {
-                            if (series[j].nroCapitulos < series[minimo].nroCapitulos)
+                            if (series[y].nroCapitulos < series[minimo].nroCapitulos)
                             {
-                                minimo = j;
+                                minimo = y;
                             }
                         }
 
-                        Serie temp = series[i];
-                        series[i] = series[minimo];
+                        Serie temp = series[x];
+                        series[x] = series[minimo];
                         series[minimo] = temp;
                     }
 

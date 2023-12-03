@@ -29,5 +29,15 @@ namespace ProyectoSeries_DLL_JSVE.Forms
         {
             colasMetodos.EliminarSerie();
         }
+
+        private void btnEditar_Click(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void btnOrdenar_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

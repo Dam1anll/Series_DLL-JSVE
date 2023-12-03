@@ -11,7 +11,7 @@ namespace ProyectoSeries_DLL_JSVE.Metodos
     public class ColasMetodos
     {
         private List<Serie> colaSeries; 
-        private DataGridView GridListas;
+        private DataGridView GridColas;
         private TextBox txtNombre;
         private TextBox txtDescripcion;
         private TextBox txtNroCapitulos;
@@ -19,7 +19,7 @@ namespace ProyectoSeries_DLL_JSVE.Metodos
 
         public ColasMetodos(DataGridView gridListas, TextBox txtNombre, TextBox txtDescripcion, TextBox txtNroCapitulos)
         {
-            this.GridListas = gridListas;
+            this.GridColas = gridListas;
             this.txtNombre = txtNombre;
             this.txtDescripcion = txtDescripcion;
             this.txtNroCapitulos = txtNroCapitulos;
@@ -38,7 +38,7 @@ namespace ProyectoSeries_DLL_JSVE.Metodos
                 Serie nuevaSerie = CrearNuevaSerie(id, nombre, descripcion, nroCapitulos);
                 AgregarSerieACola(nuevaSerie);
                 id++;
-                MostrarListas();
+                MostrarColas();
                 LimpiarTextBoxes();
             }
             else
@@ -63,7 +63,7 @@ namespace ProyectoSeries_DLL_JSVE.Metodos
             {
                 Serie serieEliminar = colaSeries[0];
                 colaSeries.RemoveAt(0);
-                MostrarListas();
+                MostrarColas();
                 LimpiarTextBoxes();
             }
             else
@@ -80,18 +80,25 @@ namespace ProyectoSeries_DLL_JSVE.Metodos
         }
 
         //Editar Serie
-        public void EditarSerie() 
+
+        private void ActualizarDataGridView()
         {
-            
+            GridColas.Rows.Clear();
+
+            foreach (Serie serie in colaSeries)
+            {
+                GridColas.Rows.Add(serie.id, serie.nombre, serie.descripcion, serie.nroCapitulos);
+            }
         }
+
         //Otros Metodos
-        private void MostrarListas()
+        private void MostrarColas()
         {
-            GridListas.Rows.Clear();
+            GridColas.Rows.Clear();
 
             foreach (Serie serieActual in colaSeries)
             {
-                GridListas.Rows.Add(serieActual.id, serieActual.nombre, serieActual.descripcion, serieActual.nroCapitulos);
+                GridColas.Rows.Add(serieActual.id, serieActual.nombre, serieActual.descripcion, serieActual.nroCapitulos);
             }
         }
 

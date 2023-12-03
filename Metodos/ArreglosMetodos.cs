@@ -7,6 +7,7 @@ using Microsoft.VisualBasic;
 using System.Windows.Forms;
 using ProyectoSeries_DLL_JSVE.Clases;
 using ProyectoSeries_DLL_JSVE.Forms;
+using System.Collections;
 
 namespace ProyectoSeries_DLL_JSVE.Metodos
 {
@@ -22,7 +23,7 @@ namespace ProyectoSeries_DLL_JSVE.Metodos
             this.GridArreglos = gridArreglos;
         }
 
-        // Agregar Arreglos
+        // Agregar Serie
         public void AgregarArreglos()
         {
             try
@@ -50,7 +51,7 @@ namespace ProyectoSeries_DLL_JSVE.Metodos
             }
         }
 
-        // Eliminar Arreglos
+        // Eliminar Serie
         public void EliminarArreglos()
         {
             try
@@ -94,7 +95,7 @@ namespace ProyectoSeries_DLL_JSVE.Metodos
         }
 
 
-        //Editar Arreglos
+        //Editar Serie
         public void EditarSerie()
         {
             try

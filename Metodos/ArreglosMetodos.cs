@@ -165,8 +165,7 @@ namespace ProyectoSeries_DLL_JSVE.Metodos
             {
                 if (seriesArray != null && seriesArray.Length > 0)
                 {
-                    // Puedes implementar la lógica de ordenación aquí si fuera necesario.
-                    MessageBox.Show("La serie se ordena por defecto ya que solo hay una serie.");
+                    OrdenarPorSeleccion();
                     ActualizarGrid();
                 }
                 else
@@ -177,6 +176,30 @@ namespace ProyectoSeries_DLL_JSVE.Metodos
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+            }
+        }
+
+        // Método de selección para ordenar por número de capítulos de menor a mayor
+        private void OrdenarPorSeleccion()
+        {
+            int n = seriesArray.Length;
+
+            for (int i = 0; i < n - 1; i++)
+            {
+                int minIndex = i;
+
+                for (int j = i + 1; j < n; j++)
+                {
+                    if (seriesArray[j]?.nroCapitulos < seriesArray[minIndex]?.nroCapitulos)
+                    {
+                        minIndex = j;
+                    }
+                }
+
+                // Intercambia los elementos
+                Serie temp = seriesArray[minIndex];
+                seriesArray[minIndex] = seriesArray[i];
+                seriesArray[i] = temp;
             }
         }
     }

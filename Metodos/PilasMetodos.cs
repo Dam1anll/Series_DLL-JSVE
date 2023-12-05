@@ -12,7 +12,7 @@ namespace ProyectoSeries_DLL_JSVE.Metodos
 {
     public class PilasMetodos
     {
-        private Stack<Serie> pilaSeries;
+        private Serie serieActual;
         private DataGridView GridPilas;
         private TextBox txtNombre;
         private TextBox txtDescripcion;
@@ -25,7 +25,7 @@ namespace ProyectoSeries_DLL_JSVE.Metodos
             this.txtDescripcion = txtDescripcion;
             this.txtNroCapitulos = txtNroCapitulos;
 
-            pilaSeries = new Stack<Serie>();
+            serieActual = null;
         }
 
         //Agregar Serie
@@ -39,14 +39,14 @@ namespace ProyectoSeries_DLL_JSVE.Metodos
             if (int.TryParse(txtNroCapitulos.Text, out int nroCapitulos))
             {
                 Serie nuevaSerie = new Serie(id, nombre, descripcion, nroCapitulos);
-                pilaSeries.Push(nuevaSerie);
+                serieActual = nuevaSerie;
                 id++;
                 MostrarPilas();
                 LimpiarTextBoxes();
             }
             else
             {
-                MessageBox.Show("Ingrese un número para los capitulos.");
+                MessageBox.Show("Ingrese un número para los capítulos.");
             }
         }
 
@@ -54,7 +54,7 @@ namespace ProyectoSeries_DLL_JSVE.Metodos
         {
             GridPilas.Rows.Clear();
 
-            foreach (Serie serieActual in pilaSeries)
+            if (serieActual != null)
             {
                 GridPilas.Rows.Add(serieActual.id, serieActual.nombre, serieActual.descripcion, serieActual.nroCapitulos);
             }
@@ -70,9 +70,8 @@ namespace ProyectoSeries_DLL_JSVE.Metodos
         //Editar Serie
         public void EditarSerie()
         {
-            if (pilaSeries.Count > 0)
+            if (serieActual != null)
             {
-                Serie serieActual = pilaSeries.Peek();
                 string nuevoNombre = ObtenerNuevoValor("Ingrese el nuevo nombre:", serieActual.nombre);
                 string nuevaDescripcion = ObtenerNuevoValor("Ingrese la nueva descripción:", serieActual.descripcion);
 
@@ -80,12 +79,9 @@ namespace ProyectoSeries_DLL_JSVE.Metodos
 
                 if (int.TryParse(nuevoNroCapitulosInput, out int nuevoNroCapitulos))
                 {
-                    pilaSeries.Pop(); 
                     serieActual.nombre = nuevoNombre;
                     serieActual.descripcion = nuevaDescripcion;
                     serieActual.nroCapitulos = nuevoNroCapitulos;
-
-                    pilaSeries.Push(serieActual); 
 
                     MostrarPilas();
                     LimpiarTextBoxes();
@@ -97,7 +93,7 @@ namespace ProyectoSeries_DLL_JSVE.Metodos
             }
             else
             {
-                MessageBox.Show("La pila está vacía, no hay elementos para editar.");
+                MessageBox.Show("No hay serie para editar.");
             }
         }
 
@@ -110,15 +106,15 @@ namespace ProyectoSeries_DLL_JSVE.Metodos
         //Eliminar Serie
         public void EliminarSerie()
         {
-            if (pilaSeries.Count > 0)
+            if (serieActual != null)
             {
-                pilaSeries.Pop();
+                serieActual = null;
                 MostrarPilas();
                 LimpiarTextBoxes();
             }
             else
             {
-                MessageBox.Show("La pila está vacía, no hay elementos para eliminar.");
+                MessageBox.Show("No hay serie para eliminar.");
             }
         }
     }

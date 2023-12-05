@@ -46,13 +46,13 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnEliminar = new System.Windows.Forms.Button();
             this.GridListas = new System.Windows.Forms.DataGridView();
-            this.label4 = new System.Windows.Forms.Label();
-            this.btnOrdenar = new System.Windows.Forms.Button();
-            this.btnEditar = new System.Windows.Forms.Button();
             this.IdSerie = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.NombreSerie = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DescripcionSerie = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.NroCapitulosSerie = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label4 = new System.Windows.Forms.Label();
+            this.btnOrdenar = new System.Windows.Forms.Button();
+            this.btnEditar = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GridListas)).BeginInit();
@@ -70,8 +70,9 @@
             this.panel1.Controls.Add(this.txtNombre);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(259, 471);
+            this.panel1.Size = new System.Drawing.Size(194, 383);
             this.panel1.TabIndex = 18;
             // 
             // btnAgregar
@@ -80,9 +81,10 @@
             this.btnAgregar.FlatAppearance.BorderSize = 0;
             this.btnAgregar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAgregar.ForeColor = System.Drawing.Color.White;
-            this.btnAgregar.Location = new System.Drawing.Point(23, 222);
+            this.btnAgregar.Location = new System.Drawing.Point(17, 180);
+            this.btnAgregar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnAgregar.Name = "btnAgregar";
-            this.btnAgregar.Size = new System.Drawing.Size(195, 35);
+            this.btnAgregar.Size = new System.Drawing.Size(146, 28);
             this.btnAgregar.TabIndex = 10;
             this.btnAgregar.Text = "Agregar";
             this.btnAgregar.UseVisualStyleBackColor = false;
@@ -90,25 +92,28 @@
             // 
             // txtNroCapitulos
             // 
-            this.txtNroCapitulos.Location = new System.Drawing.Point(118, 185);
+            this.txtNroCapitulos.Location = new System.Drawing.Point(88, 150);
+            this.txtNroCapitulos.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtNroCapitulos.Name = "txtNroCapitulos";
-            this.txtNroCapitulos.Size = new System.Drawing.Size(100, 22);
+            this.txtNroCapitulos.Size = new System.Drawing.Size(76, 20);
             this.txtNroCapitulos.TabIndex = 9;
             // 
             // txtDescripcion
             // 
-            this.txtDescripcion.Location = new System.Drawing.Point(108, 140);
+            this.txtDescripcion.Location = new System.Drawing.Point(81, 112);
+            this.txtDescripcion.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtDescripcion.Name = "txtDescripcion";
-            this.txtDescripcion.Size = new System.Drawing.Size(110, 22);
+            this.txtDescripcion.Size = new System.Drawing.Size(84, 20);
             this.txtDescripcion.TabIndex = 8;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(20, 191);
+            this.label3.Location = new System.Drawing.Point(15, 155);
+            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(92, 16);
+            this.label3.Size = new System.Drawing.Size(75, 13);
             this.label3.TabIndex = 7;
             this.label3.Text = "Nro. capitulos:";
             // 
@@ -116,9 +121,10 @@
             // 
             this.label2.AutoSize = true;
             this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(20, 146);
+            this.label2.Location = new System.Drawing.Point(15, 119);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(82, 16);
+            this.label2.Size = new System.Drawing.Size(66, 13);
             this.label2.TabIndex = 6;
             this.label2.Text = "Descripcion:";
             // 
@@ -126,17 +132,19 @@
             // 
             this.label1.AutoSize = true;
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(20, 99);
+            this.label1.Location = new System.Drawing.Point(15, 80);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(59, 16);
+            this.label1.Size = new System.Drawing.Size(47, 13);
             this.label1.TabIndex = 5;
             this.label1.Text = "Nombre:";
             // 
             // txtNombre
             // 
-            this.txtNombre.Location = new System.Drawing.Point(85, 93);
+            this.txtNombre.Location = new System.Drawing.Point(64, 76);
+            this.txtNombre.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtNombre.Name = "txtNombre";
-            this.txtNombre.Size = new System.Drawing.Size(133, 22);
+            this.txtNombre.Size = new System.Drawing.Size(101, 20);
             this.txtNombre.TabIndex = 4;
             // 
             // panel2
@@ -148,9 +156,10 @@
             this.panel2.Controls.Add(this.btnOrdenar);
             this.panel2.Controls.Add(this.btnEditar);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(259, 0);
+            this.panel2.Location = new System.Drawing.Point(194, 0);
+            this.panel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(709, 471);
+            this.panel2.Size = new System.Drawing.Size(532, 383);
             this.panel2.TabIndex = 19;
             // 
             // btnEliminar
@@ -159,9 +168,10 @@
             this.btnEliminar.FlatAppearance.BorderSize = 0;
             this.btnEliminar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnEliminar.ForeColor = System.Drawing.Color.White;
-            this.btnEliminar.Location = new System.Drawing.Point(408, 333);
+            this.btnEliminar.Location = new System.Drawing.Point(306, 271);
+            this.btnEliminar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnEliminar.Name = "btnEliminar";
-            this.btnEliminar.Size = new System.Drawing.Size(195, 35);
+            this.btnEliminar.Size = new System.Drawing.Size(146, 28);
             this.btnEliminar.TabIndex = 17;
             this.btnEliminar.Text = "Eliminar";
             this.btnEliminar.UseVisualStyleBackColor = false;
@@ -198,7 +208,8 @@
             this.GridListas.DefaultCellStyle = dataGridViewCellStyle6;
             this.GridListas.EnableHeadersVisualStyles = false;
             this.GridListas.GridColor = System.Drawing.Color.SteelBlue;
-            this.GridListas.Location = new System.Drawing.Point(6, 93);
+            this.GridListas.Location = new System.Drawing.Point(4, 76);
+            this.GridListas.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.GridListas.Name = "GridListas";
             this.GridListas.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
@@ -211,47 +222,8 @@
             this.GridListas.RowHeadersDefaultCellStyle = dataGridViewCellStyle7;
             this.GridListas.RowHeadersWidth = 51;
             this.GridListas.RowTemplate.Height = 24;
-            this.GridListas.Size = new System.Drawing.Size(691, 234);
+            this.GridListas.Size = new System.Drawing.Size(518, 190);
             this.GridListas.TabIndex = 16;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.ForeColor = System.Drawing.Color.White;
-            this.label4.Location = new System.Drawing.Point(321, 28);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(81, 29);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "Listas";
-            // 
-            // btnOrdenar
-            // 
-            this.btnOrdenar.BackColor = System.Drawing.Color.Goldenrod;
-            this.btnOrdenar.FlatAppearance.BorderSize = 0;
-            this.btnOrdenar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnOrdenar.ForeColor = System.Drawing.Color.White;
-            this.btnOrdenar.Location = new System.Drawing.Point(6, 333);
-            this.btnOrdenar.Name = "btnOrdenar";
-            this.btnOrdenar.Size = new System.Drawing.Size(195, 35);
-            this.btnOrdenar.TabIndex = 6;
-            this.btnOrdenar.Text = "Ordenar";
-            this.btnOrdenar.UseVisualStyleBackColor = false;
-            this.btnOrdenar.Click += new System.EventHandler(this.btnOrdenar_Click);
-            // 
-            // btnEditar
-            // 
-            this.btnEditar.BackColor = System.Drawing.Color.DodgerBlue;
-            this.btnEditar.FlatAppearance.BorderSize = 0;
-            this.btnEditar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnEditar.ForeColor = System.Drawing.Color.White;
-            this.btnEditar.Location = new System.Drawing.Point(207, 333);
-            this.btnEditar.Name = "btnEditar";
-            this.btnEditar.Size = new System.Drawing.Size(195, 35);
-            this.btnEditar.TabIndex = 4;
-            this.btnEditar.Text = "Editar";
-            this.btnEditar.UseVisualStyleBackColor = false;
-            this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click);
             // 
             // IdSerie
             // 
@@ -301,14 +273,57 @@
             this.NroCapitulosSerie.MinimumWidth = 6;
             this.NroCapitulosSerie.Name = "NroCapitulosSerie";
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.Color.White;
+            this.label4.Location = new System.Drawing.Point(241, 23);
+            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(62, 24);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "Listas";
+            // 
+            // btnOrdenar
+            // 
+            this.btnOrdenar.BackColor = System.Drawing.Color.Goldenrod;
+            this.btnOrdenar.FlatAppearance.BorderSize = 0;
+            this.btnOrdenar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnOrdenar.ForeColor = System.Drawing.Color.White;
+            this.btnOrdenar.Location = new System.Drawing.Point(4, 271);
+            this.btnOrdenar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnOrdenar.Name = "btnOrdenar";
+            this.btnOrdenar.Size = new System.Drawing.Size(146, 28);
+            this.btnOrdenar.TabIndex = 6;
+            this.btnOrdenar.Text = "Ordenar";
+            this.btnOrdenar.UseVisualStyleBackColor = false;
+            this.btnOrdenar.Click += new System.EventHandler(this.btnOrdenar_Click);
+            // 
+            // btnEditar
+            // 
+            this.btnEditar.BackColor = System.Drawing.Color.DodgerBlue;
+            this.btnEditar.FlatAppearance.BorderSize = 0;
+            this.btnEditar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnEditar.ForeColor = System.Drawing.Color.White;
+            this.btnEditar.Location = new System.Drawing.Point(155, 271);
+            this.btnEditar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnEditar.Name = "btnEditar";
+            this.btnEditar.Size = new System.Drawing.Size(146, 28);
+            this.btnEditar.TabIndex = 4;
+            this.btnEditar.Text = "Editar";
+            this.btnEditar.UseVisualStyleBackColor = false;
+            this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click);
+            // 
             // FormListas
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(968, 471);
+            this.ClientSize = new System.Drawing.Size(726, 383);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "FormListas";
             this.Text = "FormListas";
             this.panel1.ResumeLayout(false);

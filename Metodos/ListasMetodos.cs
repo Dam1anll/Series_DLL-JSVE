@@ -17,7 +17,7 @@ namespace ProyectoSeries_DLL_JSVE.Metodos
         private TextBox txtNombre;
         private TextBox txtDescripcion;
         private TextBox txtNroCapitulos;
-        private List<Serie> series;
+        int id = 1;
 
         public ListasMetodos(DataGridView gridListas, TextBox txtNombre, TextBox txtDescripcion, TextBox txtNroCapitulos)
         {
@@ -25,12 +25,10 @@ namespace ProyectoSeries_DLL_JSVE.Metodos
             this.txtNombre = txtNombre;
             this.txtDescripcion = txtDescripcion;
             this.txtNroCapitulos = txtNroCapitulos;
-            this.series = new List<Serie>();
         }
 
-        //Agregar Lista
+        ////////////////////////////////////////////AGREGAR SERIES//////////////////////////////////////////////////////////
 
-        int id = 1;
         public void AgregarNuevaSerie()
         {
             string nombre = txtNombre.Text;
@@ -103,7 +101,8 @@ namespace ProyectoSeries_DLL_JSVE.Metodos
             txtNroCapitulos.Text = string.Empty;
         }
 
-        //Editar Listas
+        ////////////////////////////////////////////EDITAR SERIES//////////////////////////////////////////////////////////
+  
         public void EditarSerie()
         {
             string idInput = Interaction.InputBox("Ingrese la ID de la serie que quiera editar:", "Editar Serie", "");
@@ -153,7 +152,7 @@ namespace ProyectoSeries_DLL_JSVE.Metodos
             return nuevoValor;
         }
 
-        //Eliminar mediante id
+        ////////////////////////////////////////////ELIMINAR SERIES//////////////////////////////////////////////////////////
         public void EliminarSerie()
         {
             string idInput = Interaction.InputBox("Ingrese la ID de la serie que quiera eliminar:", "Eliminar Serie", "");
@@ -194,7 +193,7 @@ namespace ProyectoSeries_DLL_JSVE.Metodos
             }
         }
 
-        //Ordenar por numero de capitulos
+        ////////////////////////////////////////////ORDENARAR SERIES//////////////////////////////////////////////////////////
         public void Ordenar()
         {
             if (cabezaLista != null && cabezaLista.siguiente != null)

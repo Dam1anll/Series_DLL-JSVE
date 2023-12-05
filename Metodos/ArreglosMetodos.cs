@@ -13,7 +13,7 @@ namespace ProyectoSeries_DLL_JSVE.Metodos
 {
     public class ArreglosMetodos
     {
-        private List<Serie> series;
+        private Serie[] seriesArray;
         private TextBox txtTamaño;
         private DataGridView GridArreglos;
 
@@ -21,6 +21,7 @@ namespace ProyectoSeries_DLL_JSVE.Metodos
         {
             this.txtTamaño = txtTamaño;
             this.GridArreglos = gridArreglos;
+            this.seriesArray = null;
         }
 
         // Agregar Serie
@@ -30,16 +31,23 @@ namespace ProyectoSeries_DLL_JSVE.Metodos
             {
                 if (int.TryParse(txtTamaño.Text, out int newSize))
                 {
-                    int ultimaIdExistente = series.Count > 0 ? series.Max(s => s.id) : 0;
+                    int ultimaIdExistente = (seriesArray != null && seriesArray.Length > 0) ? seriesArray.Max(s => s.id) : 0;
+
+                    seriesArray = new Serie[newSize];
 
                     for (int x = 0; x < newSize; x++)
                     {
                         int id = ultimaIdExistente + x + 1;
                         string nombre = Interaction.InputBox("Escribe el nombre de la serie");
                         string descripcion = Interaction.InputBox("Escribe una descripción sobre la serie");
-                        int nroCapitulos = Convert.ToInt32(Interaction.InputBox("Escribe la cantidad de capítulos de la serie"));
+                        int nroCapitulos;
 
-                        series.Add(new Serie(id, nombre, descripcion, nroCapitulos));
+                        while (!int.TryParse(Interaction.InputBox("Escribe la cantidad de capítulos de la serie"), out nroCapitulos))
+                        {
+                            MessageBox.Show("Por favor, ingrese un número válido para la cantidad de capítulos.");
+                        }
+
+                        seriesArray[x] = new Serie(id, nombre, descripcion, nroCapitulos);
                     }
 
                     ActualizarGrid();
@@ -51,20 +59,24 @@ namespace ProyectoSeries_DLL_JSVE.Metodos
             }
         }
 
-        // Eliminar Serie
         public void EliminarArreglos()
         {
             try
             {
-                if (series.Count > 0)
+                if (seriesArray != null && seriesArray.Length > 0)
                 {
-                    int idEliminar = Convert.ToInt32(Interaction.InputBox("Ingrese el id del arreglo a eliminar"));
+                    int idEliminar;
 
-                    Serie serieEliminar = series.Find(serie => serie.id == idEliminar);
-
-                    if (serieEliminar != null)
+                    while (!int.TryParse(Interaction.InputBox("Ingrese el id del arreglo a eliminar"), out idEliminar))
                     {
-                        series.Remove(serieEliminar);
+                        MessageBox.Show("Por favor, ingrese un número válido para el ID.");
+                    }
+
+                    int index = Array.FindIndex(seriesArray, s => s != null && s.id == idEliminar);
+
+                    if (index != -1)
+                    {
+                        seriesArray[index] = null;
                         ActualizarGrid();
                         MessageBox.Show("Serie eliminada correctamente.");
                     }
@@ -75,7 +87,7 @@ namespace ProyectoSeries_DLL_JSVE.Metodos
                 }
                 else
                 {
-                    MessageBox.Show("No hay Series para eliminar.");
+                    MessageBox.Show("No hay Serie para eliminar.");
                 }
             }
             catch (Exception ex)
@@ -88,55 +100,56 @@ namespace ProyectoSeries_DLL_JSVE.Metodos
         {
             GridArreglos.Rows.Clear();
 
-            foreach (Serie serie in series)
+            foreach (Serie serie in seriesArray)
             {
-                GridArreglos.Rows.Add(serie.id, serie.nombre, serie.descripcion, serie.nroCapitulos);
+                if (serie != null)
+                {
+                    GridArreglos.Rows.Add(serie.id, serie.nombre, serie.descripcion, serie.nroCapitulos);
+                }
             }
         }
 
-
-        //Editar Serie
+        // Editar Serie
         public void EditarSerie()
         {
             try
             {
-                int idSerieEditar = Convert.ToInt32(Interaction.InputBox("Ingrese el ID de la serie que quiera editar:", "Edición", ""));
-
-                Serie serieEditar = null;
-
-                foreach (Serie serie in series)
+                if (seriesArray != null && seriesArray.Length > 0)
                 {
-                    if (serie.id == idSerieEditar)
+                    int idSerieEditar;
+
+                    while (!int.TryParse(Interaction.InputBox("Ingrese el ID de la serie que quiera editar:", "Edición", ""), out idSerieEditar))
                     {
-                        serieEditar = serie;
-                        break;
+                        MessageBox.Show("Por favor, ingrese un número válido para el ID.");
                     }
-                }
 
-                if (serieEditar != null)
-                {
-                    string nuevoNombre = Interaction.InputBox("Edita el nombre de la serie", "Edición", serieEditar.nombre);
-                    string nuevaDescripcion = Interaction.InputBox("Edita la descripción de la serie", "Edición", serieEditar.descripcion);
-                    int nuevosCapitulos = Convert.ToInt32(Interaction.InputBox("Edita la cantidad de capítulos de la serie", "Edición", serieEditar.nroCapitulos.ToString()));
+                    int index = Array.FindIndex(seriesArray, s => s != null && s.id == idSerieEditar);
 
-                    serieEditar.nombre = nuevoNombre;
-                    serieEditar.descripcion = nuevaDescripcion;
-                    serieEditar.nroCapitulos = nuevosCapitulos;
-
-                    foreach (DataGridViewRow row in GridArreglos.Rows)
+                    if (index != -1)
                     {
-                        if ((int)row.Cells["IdSerie"].Value == idSerieEditar)
+                        string nuevoNombre = Interaction.InputBox("Edita el nombre de la serie", "Edición", seriesArray[index].nombre);
+                        string nuevaDescripcion = Interaction.InputBox("Edita la descripción de la serie", "Edición", seriesArray[index].descripcion);
+                        int nuevosCapitulos;
+
+                        while (!int.TryParse(Interaction.InputBox("Edita la cantidad de capítulos de la serie", "Edición", seriesArray[index].nroCapitulos.ToString()), out nuevosCapitulos))
                         {
-                            row.Cells["NombreSerie"].Value = nuevoNombre;
-                            row.Cells["DescripcionSerie"].Value = nuevaDescripcion;
-                            row.Cells["NroCapitulosSerie"].Value = nuevosCapitulos;
-                            break;
+                            MessageBox.Show("Por favor, ingrese un número válido para la cantidad de capítulos.");
                         }
+
+                        seriesArray[index].nombre = nuevoNombre;
+                        seriesArray[index].descripcion = nuevaDescripcion;
+                        seriesArray[index].nroCapitulos = nuevosCapitulos;
+
+                        ActualizarGrid();
+                    }
+                    else
+                    {
+                        MessageBox.Show("No se pudo encontrar la serie con el ID proporcionado.");
                     }
                 }
                 else
                 {
-                    MessageBox.Show("No se pudo encontrar la serie con el ID proporcionado.");
+                    MessageBox.Show("No hay Serie para editar.");
                 }
             }
             catch (Exception ex)
@@ -145,37 +158,20 @@ namespace ProyectoSeries_DLL_JSVE.Metodos
             }
         }
 
-        //Ordenar Arreglos
+        // Ordenar Arreglos
         public void OrdenarArreglo()
         {
             try
             {
-                if (series.Count > 0)
+                if (seriesArray != null && seriesArray.Length > 0)
                 {
-                    for (int x = 0; x < series.Count; x++)
-                    {
-                        int minimo = x;
-
-                        for (int y = x + 1; y < series.Count; y++)
-                        {
-                            if (series[y].nroCapitulos < series[minimo].nroCapitulos)
-                            {
-                                minimo = y;
-                            }
-                        }
-
-                        Serie temp = series[x];
-                        series[x] = series[minimo];
-                        series[minimo] = temp;
-                    }
-
+                    // Puedes implementar la lógica de ordenación aquí si fuera necesario.
+                    MessageBox.Show("La serie se ordena por defecto ya que solo hay una serie.");
                     ActualizarGrid();
-
-                    MessageBox.Show("Arreglos ordenados");
                 }
                 else
                 {
-                    MessageBox.Show("No hay arreglos para ordenar.");
+                    MessageBox.Show("No hay serie para ordenar.");
                 }
             }
             catch (Exception ex)

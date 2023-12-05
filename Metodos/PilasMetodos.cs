@@ -28,6 +28,9 @@ namespace ProyectoSeries_DLL_JSVE.Metodos
             serieActual = null;
         }
 
+        //Agregar asdasdas
+
+
         //Agregar Serie
 
         int id = 1;

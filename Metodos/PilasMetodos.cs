@@ -73,7 +73,8 @@ namespace ProyectoSeries_DLL_JSVE.Metodos
             if (GridPilas.SelectedRows.Count > 0)
             {
                 int selectedRowIndex = GridPilas.SelectedRows[0].Index;
-                Serie serieActual = pilaSeries.ElementAt(selectedRowIndex); // Obtener la serie seleccionada
+                Serie[] serieArray = pilaSeries.ToArray(); // Convertir la pila a un array
+                Serie serieActual = serieArray[selectedRowIndex]; // Obtener la serie seleccionada
 
                 string nuevoNombre = ObtenerNuevoValor("Ingrese el nuevo nombre:", serieActual.nombre);
                 string nuevaDescripcion = ObtenerNuevoValor("Ingrese la nueva descripción:", serieActual.descripcion);
@@ -82,14 +83,24 @@ namespace ProyectoSeries_DLL_JSVE.Metodos
 
                 if (int.TryParse(nuevoNroCapitulosInput, out int nuevoNroCapitulos))
                 {
-                    // Remover la serie actual de la pila
+                    // Limpiar la pila
+                    pilaSeries.Clear();
 
                     // Actualizar los valores de la serie
                     serieActual.nombre = nuevoNombre;
                     serieActual.descripcion = nuevaDescripcion;
                     serieActual.nroCapitulos = nuevoNroCapitulos;
 
-                    // Volver a agregar la serie actual al final de la pila
+                    // Volver a agregar todas las series al array a la pila, manteniendo el orden
+                    foreach (Serie serie in serieArray)
+                    {
+                        if (serie != serieActual)
+                        {
+                            pilaSeries.Push(serie);
+                        }
+                    }
+
+                    // Volver a agregar la serie editada al final de la pila
                     pilaSeries.Push(serieActual);
 
                     MostrarPilas();
@@ -105,9 +116,6 @@ namespace ProyectoSeries_DLL_JSVE.Metodos
                 MessageBox.Show("Selecciona una fila para editar.");
             }
         }
-
-
-
         private string ObtenerNuevoValor(string mensaje, string valorActual)
         {
             string nuevoValor = Interaction.InputBox(mensaje, "Editar Serie", valorActual);

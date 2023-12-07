@@ -70,9 +70,11 @@ namespace ProyectoSeries_DLL_JSVE.Metodos
         //Editar Serie
         public void EditarSerie()
         {
-            if (pilaSeries.Count > 0)
+            if (GridPilas.SelectedRows.Count > 0)
             {
-                Serie serieActual = pilaSeries.Peek();
+                int selectedRowIndex = GridPilas.SelectedRows[0].Index;
+                Serie serieActual = pilaSeries.ElementAt(selectedRowIndex); // Obtener la serie seleccionada
+
                 string nuevoNombre = ObtenerNuevoValor("Ingrese el nuevo nombre:", serieActual.nombre);
                 string nuevaDescripcion = ObtenerNuevoValor("Ingrese la nueva descripción:", serieActual.descripcion);
 
@@ -80,12 +82,15 @@ namespace ProyectoSeries_DLL_JSVE.Metodos
 
                 if (int.TryParse(nuevoNroCapitulosInput, out int nuevoNroCapitulos))
                 {
-                    pilaSeries.Pop(); 
+                    // Remover la serie actual de la pila
+
+                    // Actualizar los valores de la serie
                     serieActual.nombre = nuevoNombre;
                     serieActual.descripcion = nuevaDescripcion;
                     serieActual.nroCapitulos = nuevoNroCapitulos;
 
-                    pilaSeries.Push(serieActual); 
+                    // Volver a agregar la serie actual al final de la pila
+                    pilaSeries.Push(serieActual);
 
                     MostrarPilas();
                     LimpiarTextBoxes();
@@ -97,9 +102,11 @@ namespace ProyectoSeries_DLL_JSVE.Metodos
             }
             else
             {
-                MessageBox.Show("La pila está vacía, no hay elementos para editar.");
+                MessageBox.Show("Selecciona una fila para editar.");
             }
         }
+
+
 
         private string ObtenerNuevoValor(string mensaje, string valorActual)
         {

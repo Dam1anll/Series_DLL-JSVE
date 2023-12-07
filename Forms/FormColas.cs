@@ -32,7 +32,7 @@ namespace ProyectoSeries_DLL_JSVE.Forms
 
         private void btnEditar_Click(object sender, EventArgs e)
         {
-           
+           colasMetodos.EditarSerie();
         }
 
         private void btnOrdenar_Click(object sender, EventArgs e)

@@ -31,7 +31,7 @@ namespace ProyectoSeries_DLL_JSVE.Metodos
             {
                 if (int.TryParse(txtTamaño.Text, out int newSize))
                 {
-                    int ultimaIdExistente = (seriesArreglo != null && seriesArreglo.Length > 0) ? seriesArreglo.Max(s => s.id) : 0;
+                    int ultimaIdExistente = (seriesArreglo != null && seriesArreglo.Length > 0) ? seriesArreglo.Max(s => s?.id ?? 0) : 0;
 
                     Serie[] newArray = new Serie[(seriesArreglo != null ? seriesArreglo.Length : 0) + newSize];
 
@@ -56,6 +56,8 @@ namespace ProyectoSeries_DLL_JSVE.Metodos
                     }
 
                     seriesArreglo = newArray;
+
+                    ultimaIdExistente = seriesArreglo.Max(s => s?.id ?? 0);
 
                     ActualizarGrid();
                 }
@@ -108,12 +110,36 @@ namespace ProyectoSeries_DLL_JSVE.Metodos
         {
             GridArreglos.Rows.Clear();
 
-            foreach (Serie serie in seriesArreglo)
+            foreach (Serie serie in seriesArreglo.Where(s => s != null))
             {
-                if (serie != null)
+                GridArreglos.Rows.Add(serie.id, serie.nombre, serie.descripcion, serie.nroCapitulos);
+            }
+        }
+
+        ////////////////////////////////////////////ELIMINAR TODAS LAS SERIES//////////////////////////////////////////////////////////
+        public void EliminarTodasLasSeries()
+        {
+            try
+            {
+                if (seriesArreglo != null && seriesArreglo.Length > 0)
                 {
-                    GridArreglos.Rows.Add(serie.id, serie.nombre, serie.descripcion, serie.nroCapitulos);
+                    DialogResult result = MessageBox.Show("¿Está seguro de que desea eliminar todas las series?", "Eliminar Todas las Series", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                    if (result == DialogResult.Yes)
+                    {
+                        seriesArreglo = null;
+                        ActualizarGrid();
+                        MessageBox.Show("Todas las series han sido eliminadas correctamente.");
+                    }
                 }
+                else
+                {
+                    MessageBox.Show("No hay series para eliminar.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
 
@@ -167,13 +193,17 @@ namespace ProyectoSeries_DLL_JSVE.Metodos
         }
 
         ////////////////////////////////////////////ORDENARAR SERIES//////////////////////////////////////////////////////////
-        public void OrdenarArreglo()
+        public void OrdenarArreglo(bool ascendente)
         {
             try
             {
                 if (seriesArreglo != null && seriesArreglo.Length > 0)
                 {
-                    OrdenarPorSeleccion();
+                    if (ascendente)
+                        OrdenarAscendente();
+                    else
+                        OrdenarDescendente();
+
                     ActualizarGrid();
                 }
                 else
@@ -187,23 +217,61 @@ namespace ProyectoSeries_DLL_JSVE.Metodos
             }
         }
 
-        private void OrdenarPorSeleccion()
+        private void OrdenarAscendente()
         {
             int n = seriesArreglo.Length;
 
-            for (int i = 0; i < seriesArreglo.Length - 1; i++)
+            for (int x = 0; x < n - 1; x++)
             {
-                for (int j = i + 1; j < n; j++)
-                {
+                int min = x;
 
-                    if (seriesArreglo[j]?.nroCapitulos < seriesArreglo[i]?.nroCapitulos)
+                for (int y = x + 1; y < n; y++)
+                {
+                    if (seriesArreglo[y]?.nroCapitulos < seriesArreglo[min]?.nroCapitulos)
                     {
-                        Serie temp = seriesArreglo[j];
-                        seriesArreglo[j] = seriesArreglo[i];
-                        seriesArreglo[i] = temp;
+                        min = y;
                     }
                 }
+
+                Serie temp = seriesArreglo[min];
+                seriesArreglo[min] = seriesArreglo[x];
+                seriesArreglo[x] = temp;
             }
+        }
+
+        private void OrdenarDescendente()
+        {
+            int n = seriesArreglo.Length;
+
+            for (int x = 0; x < n - 1; x++)
+            {
+                int max = x;
+
+                for (int y = x + 1; y < n; y++)
+                {
+                    if (seriesArreglo[y]?.nroCapitulos > seriesArreglo[max]?.nroCapitulos)
+                    {
+                        max = y;
+                    }
+                }
+
+                Serie temp = seriesArreglo[max];
+                seriesArreglo[max] = seriesArreglo[x];
+                seriesArreglo[x] = temp;
+            }
+        }
+
+        ////////////////////////////////////////////BUSCAR SERIES//////////////////////////////////////////////////////////
+        public Serie BuscarSeriePorNombre(string nombre)
+        {
+            Serie serieEncontrada = null;
+
+            if (seriesArreglo != null && seriesArreglo.Length > 0)
+            {
+                serieEncontrada = seriesArreglo.FirstOrDefault(serie => serie != null && serie.nombre.Equals(nombre, StringComparison.OrdinalIgnoreCase));
+            }
+
+            return serieEncontrada;
         }
     }
 }

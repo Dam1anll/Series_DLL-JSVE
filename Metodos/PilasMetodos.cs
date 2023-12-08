@@ -12,25 +12,23 @@ namespace ProyectoSeries_DLL_JSVE.Metodos
 {
     public class PilasMetodos
     {
-        private Stack<Serie> pilaSeries;
-        private DataGridView GridPilas;
+        private Nodo topePila;
+        private DataGridView GridPila;
         private TextBox txtNombre;
         private TextBox txtDescripcion;
         private TextBox txtNroCapitulos;
+        int id = 1;
 
-        public PilasMetodos(DataGridView gridPilas, TextBox txtNombre, TextBox txtDescripcion, TextBox txtNroCapitulos)
+        public PilasMetodos(DataGridView gridPila, TextBox txtNombre, TextBox txtDescripcion, TextBox txtNroCapitulos)
         {
-            this.GridPilas = gridPilas;
+            this.GridPila = gridPila;
             this.txtNombre = txtNombre;
             this.txtDescripcion = txtDescripcion;
             this.txtNroCapitulos = txtNroCapitulos;
-
-            pilaSeries = new Stack<Serie>();
         }
 
-        //Agregar Serie
+        ////////////////////////////////////////////AGREGAR SERIES//////////////////////////////////////////////////////////
 
-        int id = 1;
         public void AgregarNuevaSerie()
         {
             string nombre = txtNombre.Text;
@@ -39,65 +37,137 @@ namespace ProyectoSeries_DLL_JSVE.Metodos
             if (int.TryParse(txtNroCapitulos.Text, out int nroCapitulos))
             {
                 Serie nuevaSerie = new Serie(id, nombre, descripcion, nroCapitulos);
-                pilaSeries.Push(nuevaSerie);
-                id++;
-                MostrarPilas();
-                LimpiarTextBoxes();
-            }
-            else
-            {
-                MessageBox.Show("Ingrese un número para los capitulos.");
-            }
-        }
-
-        private void MostrarPilas()
-        {
-            GridPilas.Rows.Clear();
-
-            foreach (Serie serieActual in pilaSeries)
-            {
-                GridPilas.Rows.Add(serieActual.id, serieActual.nombre, serieActual.descripcion, serieActual.nroCapitulos);
-            }
-        }
-
-        private void LimpiarTextBoxes()
-        {
-            txtNombre.Text = string.Empty;
-            txtDescripcion.Text = string.Empty;
-            txtNroCapitulos.Text = string.Empty;
-        }
-
-        //Editar Serie
-        public void EditarSerie()
-        {
-            if (pilaSeries.Count > 0)
-            {
-                Serie serieActual = pilaSeries.Peek();
-                string nuevoNombre = ObtenerNuevoValor("Ingrese el nuevo nombre:", serieActual.nombre);
-                string nuevaDescripcion = ObtenerNuevoValor("Ingrese la nueva descripción:", serieActual.descripcion);
-
-                string nuevoNroCapitulosInput = ObtenerNuevoValor("Ingrese el nuevo número de capítulos:", serieActual.nroCapitulos.ToString());
-
-                if (int.TryParse(nuevoNroCapitulosInput, out int nuevoNroCapitulos))
+                if (ApilarSerie(nuevaSerie))
                 {
-                    pilaSeries.Pop(); 
-                    serieActual.nombre = nuevoNombre;
-                    serieActual.descripcion = nuevaDescripcion;
-                    serieActual.nroCapitulos = nuevoNroCapitulos;
-
-                    pilaSeries.Push(serieActual); 
-
-                    MostrarPilas();
+                    id++;
+                    MostrarPila();
                     LimpiarTextBoxes();
                 }
                 else
                 {
-                    MessageBox.Show("Ingrese el número de capítulos.");
+                    MessageBox.Show("Error al agregar la serie.");
                 }
             }
             else
             {
-                MessageBox.Show("La pila está vacía, no hay elementos para editar.");
+                MessageBox.Show("Ingrese un número para los capítulos.");
+            }
+        }
+
+        private bool ApilarSerie(Serie nuevaSerie)
+        {
+            try
+            {
+                Nodo nuevoNodo = new Nodo(nuevaSerie);
+
+                if (topePila == null || nuevaSerie.id > topePila.datos.id)
+                {
+                    nuevoNodo.siguiente = topePila;
+                    topePila = nuevoNodo;
+                }
+                else
+                {
+                    Nodo nodoActual = topePila;
+
+                    while (nodoActual.siguiente != null && nuevaSerie.id < nodoActual.siguiente.datos.id)
+                    {
+                        nodoActual = nodoActual.siguiente;
+                    }
+
+                    nuevoNodo.siguiente = nodoActual.siguiente;
+                    nodoActual.siguiente = nuevoNodo;
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al agregar la serie: {ex.Message}");
+                return false;
+            }
+        }
+
+        private void MostrarPila()
+        {
+            GridPila.Rows.Clear();
+
+            Nodo nodoActual = topePila;
+            while (nodoActual != null)
+            {
+                Serie serieActual = nodoActual.datos;
+                GridPila.Rows.Add(serieActual.id, serieActual.nombre, serieActual.descripcion, serieActual.nroCapitulos);
+                nodoActual = nodoActual.siguiente;
+            }
+        }
+
+        ////////////////////////////////////////////Editar SERIES//////////////////////////////////////////////////////////
+        public void EditarSerie()
+        {
+            string idInput = Interaction.InputBox("Ingrese la ID de la serie que quiera editar:", "Editar Serie", "");
+
+            if (int.TryParse(idInput, out int idSeleccionado))
+            {
+                Serie serieOriginal = DesapilarSerie(idSeleccionado);
+
+                if (serieOriginal != null)
+                {
+                    string nuevoNombre = ObtenerNuevoValor("Ingrese el nuevo nombre:", serieOriginal.nombre);
+                    string nuevaDescripcion = ObtenerNuevoValor("Ingrese la nueva descripción:", serieOriginal.descripcion);
+
+                    string nuevoNroCapitulosInput = ObtenerNuevoValor("Ingrese el nuevo número de capítulos:", serieOriginal.nroCapitulos.ToString());
+
+                    if (int.TryParse(nuevoNroCapitulosInput, out int nuevoNroCapitulos))
+                    {
+                        Serie serieEditada = new Serie(idSeleccionado, nuevoNombre, nuevaDescripcion, nuevoNroCapitulos);
+
+                        ApilarSerie(serieEditada);
+
+                        MostrarPila();
+                        LimpiarTextBoxes();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Ingrese el número de capítulos.");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("No se encontró la serie en la pila.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Id no encontrado.");
+            }
+        }
+
+        private Serie DesapilarSerie(int id)
+        {
+            Nodo nodoActual = topePila;
+            Nodo nodoAnterior = null;
+
+            while (nodoActual != null && nodoActual.datos.id != id)
+            {
+                nodoAnterior = nodoActual;
+                nodoActual = nodoActual.siguiente;
+            }
+
+            if (nodoActual != null)
+            {
+                if (nodoAnterior == null)
+                {
+                    topePila = nodoActual.siguiente;
+                }
+                else
+                {
+                    nodoAnterior.siguiente = nodoActual.siguiente;
+                }
+
+                return nodoActual.datos;
+            }
+            else
+            {
+                return null;
             }
         }
 
@@ -107,19 +177,27 @@ namespace ProyectoSeries_DLL_JSVE.Metodos
             return nuevoValor;
         }
 
-        //Eliminar Serie
+        ////////////////////////////////////////////ELIMINAR SERIES//////////////////////////////////////////////////////////
+
         public void EliminarSerie()
         {
-            if (pilaSeries.Count > 0)
+            if (topePila != null)
             {
-                pilaSeries.Pop();
-                MostrarPilas();
-                LimpiarTextBoxes();
+                Serie serieEliminar = topePila.datos;
+                topePila = topePila.siguiente;
+                MostrarPila();
             }
             else
             {
-                MessageBox.Show("La pila está vacía, no hay elementos para eliminar.");
+                MessageBox.Show("La pila está vacía.");
             }
+        }
+
+        private void LimpiarTextBoxes()
+        {
+            txtNombre.Text = string.Empty;
+            txtDescripcion.Text = string.Empty;
+            txtNroCapitulos.Text = string.Empty;
         }
     }
 }

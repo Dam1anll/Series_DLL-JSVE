@@ -196,13 +196,8 @@ namespace ProyectoSeries_DLL_JSVE.Metodos
         ////////////////////////////////////////////ELIMINAR TODAS LAS SERIES//////////////////////////////////////////////////////////
         public void EliminarTodasLasSeries()
         {
-            // Limpiar la lista enlazada
             cabezaLista = null;
-
-            // Limpiar el DataGridView
             GridListas.Rows.Clear();
-
-            // Limpiar los TextBoxes u otros controles si es necesario
             LimpiarTextBoxes();
         }
 

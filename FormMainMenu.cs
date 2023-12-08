@@ -45,5 +45,10 @@ namespace ProyectoSeries_DLL_JSVE
         {
             AbrirFormHija(new FormColas());
         }
+
+        private void PanelLateral_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

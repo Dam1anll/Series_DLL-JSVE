@@ -262,7 +262,7 @@ namespace ProyectoSeries_DLL_JSVE.Metodos
         }
 
         ////////////////////////////////////////////BUSCAR SERIES//////////////////////////////////////////////////////////
-        public Serie BuscarSeriePorNombre(string nombre)
+        public Serie BuscarSerie(string nombre)
         {
             Serie serieEncontrada = null;
 

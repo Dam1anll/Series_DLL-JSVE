@@ -56,9 +56,9 @@ namespace ProyectoSeries_DLL_JSVE.Forms
         {
             try
             {
-                string nombreABuscar = Interaction.InputBox("Ingrese el nombre de la serie que quiere", "Búsqueda por Nombre", "");
+                string nombreABuscar = Interaction.InputBox("Ingrese el nombre de la serie que quiere buscar", "Búsqueda por Nombre", "");
 
-                Serie serieEncontrada = arreglosMetodos.BuscarSeriePorNombre(nombreABuscar);
+                Serie serieEncontrada = arreglosMetodos.BuscarSerie(nombreABuscar);
 
                 if (serieEncontrada != null)
                 {

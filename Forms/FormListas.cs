@@ -1,4 +1,6 @@
-﻿using ProyectoSeries_DLL_JSVE.Metodos;
+﻿using Microsoft.VisualBasic;
+using ProyectoSeries_DLL_JSVE.Clases;
+using ProyectoSeries_DLL_JSVE.Metodos;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -29,6 +31,10 @@ namespace ProyectoSeries_DLL_JSVE.Forms
         {
             listasMetodos.EliminarSerie();
         }
+        private void btnEliminarTodo_Click(object sender, EventArgs e)
+        {
+            listasMetodos.EliminarTodasLasSeries();
+        }
 
         private void btnEditar_Click(object sender, EventArgs e)
         {
@@ -37,7 +43,35 @@ namespace ProyectoSeries_DLL_JSVE.Forms
 
         private void btnOrdenar_Click(object sender, EventArgs e)
         {
-            listasMetodos.Ordenar();
+            listasMetodos.OrdenarAscendente();
+        }
+
+        private void btnOrdenar2_Click(object sender, EventArgs e)
+        {
+            listasMetodos.OrdenarDescendente();
+        }
+
+        private void btnBuscar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string nombreABuscar = Interaction.InputBox("Ingrese el nombre de la serie que quiere buscar", "Búsqueda por Nombre", "");
+
+                Serie serieEncontrada = listasMetodos.BuscarSerie(nombreABuscar);
+
+                if (serieEncontrada != null)
+                {
+                    MessageBox.Show($"Serie encontrada:\nID: {serieEncontrada.id}\nNombre: {serieEncontrada.nombre}\nDescripción: {serieEncontrada.descripcion}\nNúmero de Capítulos: {serieEncontrada.nroCapitulos}");
+                }
+                else
+                {
+                    MessageBox.Show("No se encontró la serie.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

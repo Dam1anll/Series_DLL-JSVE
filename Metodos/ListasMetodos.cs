@@ -193,8 +193,21 @@ namespace ProyectoSeries_DLL_JSVE.Metodos
             }
         }
 
+        ////////////////////////////////////////////ELIMINAR TODAS LAS SERIES//////////////////////////////////////////////////////////
+        public void EliminarTodasLasSeries()
+        {
+            // Limpiar la lista enlazada
+            cabezaLista = null;
+
+            // Limpiar el DataGridView
+            GridListas.Rows.Clear();
+
+            // Limpiar los TextBoxes u otros controles si es necesario
+            LimpiarTextBoxes();
+        }
+
         ////////////////////////////////////////////ORDENARAR SERIES//////////////////////////////////////////////////////////
-        public void Ordenar()
+        public void OrdenarAscendente()
         {
             if (cabezaLista != null && cabezaLista.siguiente != null)
             {
@@ -202,7 +215,7 @@ namespace ProyectoSeries_DLL_JSVE.Metodos
 
                 while (actual != null)
                 {
-                    Nodo minimo = EncontrarNodo(actual);
+                    Nodo minimo = EncontrarNodoAscendente(actual);
 
                     Serie temp = actual.datos;
                     actual.datos = minimo.datos;
@@ -218,7 +231,50 @@ namespace ProyectoSeries_DLL_JSVE.Metodos
                 MessageBox.Show("La lista está vacía o solo contiene un elemento, no es necesario ordenar.");
             }
         }
-        private Nodo EncontrarNodo(Nodo inicio)
+
+        public void OrdenarDescendente()
+        {
+            if (cabezaLista != null && cabezaLista.siguiente != null)
+            {
+                Nodo actual = cabezaLista;
+
+                while (actual != null)
+                {
+                    Nodo maximo = EncontrarNodoDescendente(actual);
+
+                    Serie temp = actual.datos;
+                    actual.datos = maximo.datos;
+                    maximo.datos = temp;
+
+                    actual = actual.siguiente;
+                }
+
+                MostrarListas();
+            }
+            else
+            {
+                MessageBox.Show("La lista está vacía o solo contiene un elemento, no es necesario ordenar.");
+            }
+        }
+
+        private Nodo EncontrarNodoDescendente(Nodo inicio)
+        {
+            Nodo maximo = inicio;
+            Nodo actual = inicio.siguiente;
+
+            while (actual != null)
+            {
+                if (actual.datos.nroCapitulos > maximo.datos.nroCapitulos)
+                {
+                    maximo = actual;
+                }
+
+                actual = actual.siguiente;
+            }
+
+            return maximo;
+        }
+        private Nodo EncontrarNodoAscendente(Nodo inicio)
         {
             Nodo minimo = inicio;
             Nodo actual = inicio.siguiente;
@@ -234,6 +290,26 @@ namespace ProyectoSeries_DLL_JSVE.Metodos
             }
 
             return minimo;
+        }
+
+        ////////////////////////////////////////////BUSCAR SERIES//////////////////////////////////////////////////////////
+        public Serie BuscarSerie(string nombre)
+        {
+            Serie serieEncontrada = null;
+
+            Nodo nodoActual = cabezaLista;
+            while (nodoActual != null)
+            {
+                if (nodoActual.datos.nombre.Equals(nombre, StringComparison.OrdinalIgnoreCase))
+                {
+                    serieEncontrada = nodoActual.datos;
+                    break;
+                }
+
+                nodoActual = nodoActual.siguiente;
+            }
+
+            return serieEncontrada;
         }
     }
 }
